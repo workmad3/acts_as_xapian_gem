@@ -5,9 +5,9 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "acts_as_xapian"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
-    gem.email = "mn@mcaddie.com"
+    gem.summary = %Q{acts_as_xapian gemified}
+    gem.description = %Q{ruby gem for integrating with the xapian fulltext search engine}
+    gem.email = "mdnelson30@gmail.com"
     gem.homepage = "http://github.com/mnelson/acts_as_xapian"
     gem.authors = ["Mike Nelson"]
     gem.add_development_dependency "rspec", ">= 1.2.9"

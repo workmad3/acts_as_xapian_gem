@@ -1,10 +1,6 @@
-require 'rubygems'
-require 'rake'
-require 'rake/testtask'
-require 'active_record'
-require File.dirname(__FILE__) + '/../lib/acts_as_xapian.rb'
 
 namespace :xapian do
+  
     # Parameters - specify "flush=true" to save changes to the Xapian database
     # after each model that is updated. This is safer, but slower. Specify
     # "verbose=true" to print model name as it is run.
