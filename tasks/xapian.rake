@@ -1,0 +1,1 @@
+require File.join(File.dirname(__FILE__), 'generators', 'acts_as_xapian', 'templates', 'task.rake')
