@@ -8,7 +8,7 @@ begin
     gem.summary = %Q{A gem for interacting with the Xapian full text search engine}
     gem.description = %Q{A gem for interacting with the Xapian full text search engine. Completely based on the acts_as_xapian plugin.}
     gem.email = "mdnelson30@gmail.com"
-    gem.homepage = "http://github.com/mnelson/acts_as_xapian"
+    gem.homepage = "http://github.com/mnelson/acts_as_xapian_gem"
     gem.authors = ["Mike Nelson"]
     gem.add_development_dependency "rspec", ">= 1.2.9"
     gem.add_development_dependency "active_record"
