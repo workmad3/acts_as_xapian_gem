@@ -27,7 +27,7 @@ Migrate your database
 
 == Usage
 
-Xapian is an *offline indexing* search library - only one process can have the
+Xapian is an offline indexing search library - only one process can have the
 Xapian database open for writing at once, and others that try meanwhile are
 unceremoniously kicked out. For this reason, acts_as_xapian does not support
 immediate writing to the database when your models change.
@@ -42,28 +42,28 @@ Here's how to add indexing to your Rails app:
 1. Put acts_as_xapian in your models that need search indexing. e.g.
 
     acts_as_xapian :texts => [ :name, :short_name ],
-       :values => [ [ :created_at, 0, "created_at", :date ] ],
-       :terms => [ [ :variety, 'V', "variety" ] ]
+                               :values => [ [ :created_at, 0, "created_at", :date ] ],
+                               :terms => [ [ :variety, 'V', "variety" ] ]
 
 Options must include:
 
 * :texts, an array of fields for indexing with full text search. 
-e.g. :texts => [ :title, :body ]
+ e.g. :texts => [ :title, :body ]
 
 * :values, things which have a range of values for sorting, or for collapsing. 
 Specify an array quadruple of [ field, identifier, prefix, type ] where 
-** identifier is an arbitary numeric identifier for use in the Xapian database
-** prefix is the part to use in search queries that goes before the :
-** type can be any of :string, :number or :date
+  * identifier is an arbitary numeric identifier for use in the Xapian database
+  * prefix is the part to use in search queries that goes before the :
+  * type can be any of :string, :number or :date
 
 e.g. :values => [ [ :created_at, 0, "created_at", :date ],
 [ :size, 1, "size", :string ] ]
 
 * :terms, things which come with a prefix (before a :) in search queries. 
 Specify an array triple of [ field, char, prefix ] where 
-** char is an arbitary single upper case char used in the Xapian database, just
+  * char is an arbitary single upper case char used in the Xapian database, just
 pick any single uppercase character, but use a different one for each prefix.
-** prefix is the part to use in search queries that goes before the :
+  * prefix is the part to use in search queries that goes before the :
 For example, if you were making Google and indexing to be able to later do a
 query like "site:www.whatdotheyknow.com", then the prefix would be "site".
 
