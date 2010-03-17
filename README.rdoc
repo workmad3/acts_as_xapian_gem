@@ -41,9 +41,9 @@ Here's how to add indexing to your Rails app:
 
 1. Put acts_as_xapian in your models that need search indexing. e.g.
 
-    acts_as_xapian :texts => [ :name, :short_name ],
-                               :values => [ [ :created_at, 0, "created_at", :date ] ],
-                               :terms => [ [ :variety, 'V', "variety" ] ]
+  acts_as_xapian :texts => [:name, :short_name],
+                           :values => [[ :created_at, 0, "created_at", :date ]],
+                           :terms => [[ :variety, 'V', "variety" ]]
 
 Options must include:
 
@@ -56,12 +56,9 @@ Options must include:
 	- prefix is the part to use in search queries that goes before the :
 	- type can be any of :string, :number or :date
 
-e.g. :values => [ [ :created_at, 0, "created_at", :date ],
-[ :size, 1, "size", :string ] ]
+ e.g. :values => [[ :created_at, 0, "created_at", :date ], [ :size, 1, "size", :string ]]
 
-* :terms, things which come with a prefix (before a :) in search queries. 
-Specify an array triple of [ field, char, prefix ] where 
-	* char is an arbitary single upper case char used in the Xapian database, just
+* :terms, things which come with a prefix (before a :) in search queries. Specify an array triple of [ field, char, prefix ] where _char_ is an arbitary single upper case char used in the Xapian database, just
 pick any single uppercase character, but use a different one for each prefix.
 	* prefix is the part to use in search queries that goes before the :
 For example, if you were making Google and indexing to be able to later do a
