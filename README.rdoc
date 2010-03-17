@@ -50,11 +50,7 @@ Options must include:
 * :texts, an array of fields for indexing with full text search. 
  e.g. :texts => [ :title, :body ]
 
-* :values, things which have a range of values for sorting, or for collapsing. 
-  Specify an array quadruple of [ field, identifier, prefix, type ] where 
-	- identifier is an arbitary numeric identifier for use in the Xapian database
-	- prefix is the part to use in search queries that goes before the :
-	- type can be any of :string, :number or :date
+* :values, things which have a range of values for sorting or collapsing. Specify an array quadruple of [ field, identifier, prefix, type ] where _identifier_ is an arbitary numeric identifier for use in the Xapian database, _prefix_ is the part to use in search queries that goes before the _:_ , and _type_ can be any of _:string_, _:number_ or _:date_.
 
  e.g. :values => [[ :created_at, 0, "created_at", :date ], [ :size, 1, "size", :string ]]
 
