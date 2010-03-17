@@ -5,12 +5,13 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "acts_as_xapian"
-    gem.summary = %Q{acts_as_xapian gemified}
-    gem.description = %Q{ruby gem for integrating with the xapian fulltext search engine}
+    gem.summary = %Q{A gem for interacting with the Xapian full text search engine}
+    gem.description = %Q{A gem for interacting with the Xapian full text search engine. Completely based on the acts_as_xapian plugin.}
     gem.email = "mdnelson30@gmail.com"
     gem.homepage = "http://github.com/mnelson/acts_as_xapian"
     gem.authors = ["Mike Nelson"]
     gem.add_development_dependency "rspec", ">= 1.2.9"
+    gem.add_development_dependency "active_record"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
