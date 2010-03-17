@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mike Nelson"]
-  s.date = %q{2010-03-15}
+  s.date = %q{2010-03-17}
   s.description = %q{ruby gem for integrating with the xapian fulltext search engine}
   s.email = %q{mdnelson30@gmail.com}
   s.extra_rdoc_files = [
@@ -22,8 +22,12 @@ Gem::Specification.new do |s|
      "LICENSE",
      "README.textile",
      "Rakefile",
+     "VERSION",
+     "acts_as_xapian.gemspec",
      "generators/acts_as_xapian/USAGE",
      "generators/acts_as_xapian/acts_as_xapian_generator.rb",
+     "generators/acts_as_xapian/templates/migrations/migration.rb",
+     "generators/acts_as_xapian/templates/tasks/xapian.rake",
      "lib/acts_as_xapian.rb",
      "lib/acts_as_xapian/base.rb",
      "lib/acts_as_xapian/core_ext/array.rb",

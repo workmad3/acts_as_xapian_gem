@@ -9,6 +9,11 @@ namespace :xapian do
         ActsAsXapian::WriteableIndex.update_index(ENV['flush'] ? true : false, ENV['verbose'] ? true : false)
     end
 
+    desc 'Pulls all the xapian models from either the params or the project itself'
+    task :retrieve_models => :environment do 
+      @models = (ENV['models'] || ENV['m']) && (ENV['models'] || ENV['m']).split(" ").map{|m| m.constantize} || ActiveRecord::Base.send(:subclasses).select{|klazz| klazz.respond_to?(:xapian?)}
+      STDOUT.puts("Found Xapian Models: #{@models.map(&:name).join(', ')}")
+    end
     # Parameters - specify 'models="PublicBody User"' to say which models
     # you index with Xapian.
     # This totally rebuilds the database, so you will want to restart any
@@ -16,19 +21,17 @@ namespace :xapian do
     # still pointing to the old deleted database. Specify "verbose=true" to
     # print model name as it is run.
     desc 'Completely rebuilds Xapian search index (must specify all models)'
-    task :rebuild_index => :environment do
-        raise "specify ALL your models with models=\"ModelName1 ModelName2\" as parameter" if ENV['models'].nil?
-        ActsAsXapian::WriteableIndex.rebuild_index(ENV['models'].split(" ").map{|m| m.constantize}, ENV['verbose'] ? true : false)
+    task :rebuild_index => :retrieve_models do
+        ActsAsXapian::WriteableIndex.rebuild_index(@models, ENV['verbose'] ? true : false)
     end
 
     # Parameters - are models, query, offset, limit, sort_by_prefix,
     # collapse_by_prefix
     desc 'Run a query, return YAML of results'
-    task :query => :environment do
-        raise "specify models=\"ModelName1 ModelName2\" as parameter" if ENV['models'].nil?
-        raise "specify query=\"your terms\" as parameter" if ENV['query'].nil?
-        s = ActsAsXapian::Search.new(ENV['models'].split(" ").map{|m| m.constantize}, 
-            ENV['query'],
+    task :query => :retrieve_models do
+        raise "specify query=\"your terms\" as parameter" if (ENV['query'] || ENV['q']).nil?
+        s = ActsAsXapian::Search.new(@models, 
+            (ENV['query'] || ENV['q']),
             :offset => (ENV['offset'] || 0), :limit => (ENV['limit'] || 10),
             :sort_by_prefix => (ENV['sort_by_prefix'] || nil), 
             :collapse_by_prefix => (ENV['collapse_by_prefix'] || nil)

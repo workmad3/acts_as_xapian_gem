@@ -22,14 +22,13 @@ module ActsAsXapian
         raise "Set RAILS_ENV, so acts_as_xapian can find the right Xapian database" unless environment
 
         # check for a config file
-        config_file = RAILS_ROOT + "/config/xapian.yml"
+        config_file = File.join(RAILS_ROOT, 'config', 'xapian.yml')
         @@config = File.exists?(config_file) ? YAML.load_file(config_file)[environment] : {}
-
         # figure out where the DBs should go
         if config['base_db_path']
           db_parent_path = File.join(RAILS_ROOT, config['base_db_path'])
         else
-          db_parent_path = File.join(File.dirname(__FILE__), '../xapiandbs/')
+          db_parent_path = File.join(RAILS_ROOT, 'db', 'xapiandbs')
         end
 
         # make the directory for the xapian databases to go in
