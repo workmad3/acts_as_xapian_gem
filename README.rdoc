@@ -52,9 +52,9 @@ Options must include:
 
 * :values, things which have a range of values for sorting, or for collapsing. 
 Specify an array quadruple of [ field, identifier, prefix, type ] where 
-	* identifier is an arbitary numeric identifier for use in the Xapian database
-	* prefix is the part to use in search queries that goes before the :
-	* type can be any of :string, :number or :date
+	- identifier is an arbitary numeric identifier for use in the Xapian database
+	- prefix is the part to use in search queries that goes before the :
+	- type can be any of :string, :number or :date
 
 e.g. :values => [ [ :created_at, 0, "created_at", :date ],
 [ :size, 1, "size", :string ] ]
