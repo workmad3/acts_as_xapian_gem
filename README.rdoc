@@ -2,10 +2,7 @@
 
 == Introduction
 
-Xapian[http://www.xapian.org] is a full text search engine library which has
-Ruby bindings. acts_as_xapian adds support for it to Rails. It is an
-alternative to acts_as_solr, acts_as_ferret, Ultrasphinx, acts_as_indexed,
-acts_as_searchable or acts_as_tsearch.
+Xapian[http://www.xapian.org] is a full text search engine library which has Ruby bindings. acts_as_xapian adds support for it to Rails. It is an alternative to acts_as_solr, acts_as_ferret, Ultrasphinx, acts_as_indexed, acts_as_searchable or acts_as_tsearch.
 
 acts_as_xapian is deployed in production on these websites.
 * WhatDoTheyKnow[http://www.whatdotheyknow.com] 
@@ -27,15 +24,9 @@ Migrate your database
 
 == Usage
 
-Xapian is an offline indexing search library - only one process can have the
-Xapian database open for writing at once, and others that try meanwhile are
-unceremoniously kicked out. For this reason, acts_as_xapian does not support
-immediate writing to the database when your models change.
+Xapian is an offline indexing search library - only one process can have the Xapian database open for writing at once, and others that try meanwhile are unceremoniously kicked out. For this reason, acts_as_xapian does not support immediate writing to the database when your models change.
 
-Instead, there is a ActsAsXapianJob model which stores which models need
-updating or deleting in the search index. A rake task 'xapian:update_index'
-then performs the updates since last change. You can run it on a cron job, or
-similar.
+Instead, there is a ActsAsXapianJob model which stores which models need updating or deleting in the search index. A rake task 'xapian:update_index' then performs the updates since last change. You can run it on a cron job, or similar.
 
 Here's how to add indexing to your Rails app:
 
@@ -50,30 +41,24 @@ Options must include:
 * :texts, an array of fields for indexing with full text search. 
  e.g. :texts => [ :title, :body ]
 
-* :values, things which have a range of values for sorting or collapsing. Specify an array quadruple of [ field, identifier, prefix, type ] where _identifier_ is an arbitary numeric identifier for use in the Xapian database, _prefix_ is the part to use in search queries that goes before the _ : _ , and _type_ can be any of _ :string_, _ :number_ or _ :date_.
-
+* :values, things which have a range of values for sorting or collapsing. Specify an array quadruple of [ field, identifier, prefix, type ] where _identifier_ is an arbitary numeric identifier for use in the Xapian database, _prefix_ is the part to use in search queries that goes before the ':' , and _type_ can be any of ':string', ':number' or ':date'.
  e.g. :values => [[ :created_at, 0, "created_at", :date ], [ :size, 1, "size", :string ]]
 
-* :terms, things which come with a prefix (before a :) in search queries. Specify an array triple of [ field, char, prefix ] where _char_ is an arbitary single upper case char used in the Xapian database, just
-pick any single uppercase character, but use a different one for each prefix.
-	* prefix is the part to use in search queries that goes before the :
-For example, if you were making Google and indexing to be able to later do a
-query like "site:www.whatdotheyknow.com", then the prefix would be "site".
-
-e.g. :terms => [ [ :variety, 'V', "variety" ] ]
+* :terms, things which come with a prefix (before a ':') in search queries. Specify an array triple of [ field, char, prefix ] where _char_ is an arbitary single upper case char used in the Xapian database, just pick any single uppercase character, but use a different one for each prefix. _prefix_ is the part to use in search queries that goes before the ':'. For example, if you were making Google and indexing to be able to later do a query like "site:www.whatdotheyknow.com", then the prefix would be "site".
+ e.g. :terms => [ [ :variety, 'V', "variety" ] ]
         
-A 'field' is a symbol referring to either an attribute or a function which
-returns the text, date or number to index. Both 'identifier' and 'char' must be
-the same for the same prefix in different models.
+A 'field' is a symbol referring to either an attribute or a function which returns the text, date or number to index. Both 'identifier' and 'char' must be the same for the same prefix in different models.
 
 Options may include:
-* :eager_load, added as an :include clause when looking up search results in
-database
-* :if, either an attribute or a function which if returns false means the
-object isn't indexed
 
-2. Call 'rake xapian:rebuild_index' to build the index
-the first time. It's put in a development/test/production directory in your db folder. See the configuration section below if you want to change this.
+* :eager_load, added as an :include clause when looking up search results in database
+* :if, either an attribute or a function which if returns false means the object isn't indexed
+
+2. To build the index
+the first time, call: 
+ rake xapian:rebuild_index
+
+It puts the db in the development/test/production directory in your db directory. See the configuration section below if you want to change this.
 
 3. Then from a cron job or a daemon, or by hand regularly!, call:
  'rake xapian:update_index'
@@ -85,7 +70,6 @@ the first time. It's put in a development/test/production directory in your db f
 === Testing indexing
 
 If you just want to test indexing is working, you'll find this rake task useful:
-
     rake xapian:query q="moo"
   
 You have a few more options here:
@@ -108,12 +92,7 @@ And then a hash of options:
 * :sort_by_ascending - Default true (documents with higher values better/earlier), set to false for descending sort
 * :collapse_by_prefix - Optionally, prefix of value to collapse by (i.e. only return most relevant result from group)
 
-Google like query syntax is as described in 
-    {Xapian::QueryParser Syntax}[http://www.xapian.org/docs/queryparser.html]
-Queries can include prefix:value parts, according to what you indexed in the
-acts_as_xapian part above. You can also say things like model:InfoRequestEvent 
-to constrain by model in more complex ways than the :model parameter, or
-modelid:InfoRequestEvent-100 to only find one specific object.
+Google like query syntax is as described in {Xapian::QueryParser Syntax}[http://www.xapian.org/docs/queryparser.html] Queries can include prefix:value parts, according to what you indexed in the acts_as_xapian part above. You can also say things like model:InfoRequestEvent to constrain by model in more complex ways than the :model parameter, or modelid:InfoRequestEvent-100 to only find one specific object.
 
 Returns an ActsAsXapian::Search object. Useful methods are:
 * description - a techy one, to check how the query has been parsed
@@ -132,46 +111,34 @@ To find models that are similar to a given set of models call ActsAsXapian::Simi
 * model_classes - list of model classes to return models from within
 * models - list of models that you want to find related ones to
 
-Returns an ActsAsXapian::Similar object. Has all methods from ActsAsXapian::Search above, except
-for words_to_highlight. In addition has:
-* important_terms - the terms extracted from the input models, that were used to search for output
-You need the results methods to get the similar models.
+Returns an ActsAsXapian::Similar object. Has all methods from ActsAsXapian::Search above, except for words_to_highlight. In addition has:
+* important_terms - the terms extracted from the input models, that were used to search for output. You need the results methods to get the similar models.
 
 
 == Configuration
 
 
-If you want to customise the configuration of acts_as_xapian, it will look for
-a file called 'xapian.yml' under RAILS_ROOT/config. As is familiar from the
-format of the database.yml file, separate :development, :test and :production
-sections are expected.
+If you want to customise the configuration of acts_as_xapian, it will look for a file called 'xapian.yml' under RAILS_ROOT/config. As is familiar from the format of the database.yml file, separate :development, :test and :production sections are expected.
 
 The following options are available:
-* base_db_path - specifies the directory, relative to RAILS_ROOT, in which 
-acts_as_xapian stores its search index databases. Default is the directory
-xapiandbs within the acts_as_xapian directory.
+* base_db_path - specifies the directory, relative to RAILS_ROOT, in which acts_as_xapian stores its search index databases. Default is the xapiandbs directory within the db directory.
 
 
 == Performance
 
-On development sites, acts_as_xapian automatically logs the time taken to do
-searches.  The time displayed is for the Xapian parts of the query; the Rails
-database model lookups will be logged separately by ActiveRecord. Example:
+On development sites, acts_as_xapian automatically logs the time taken to do searches.  The time displayed is for the Xapian parts of the query; the Rails database model lookups will be logged separately by ActiveRecord. Example:
 
  Xapian query (0.00029s) Search: hello
 
-To enable this, and other performance logging, on a production site,
-temporarily add this to the end of your config/environment.rb
+To enable this, and other performance logging, on a production site, temporarily add this to the end of your config/environment.rb
 
  ActiveRecord::Base.logger = Logger.new(STDOUT)
 
 
 == Support
 
-Please ask any questions on the 
-{acts_as_xapian Google Group}[http://groups.google.com/group/acts_as_xapian]
+Please ask any questions on the {acts_as_xapian Google Group}[http://groups.google.com/group/acts_as_xapian]
 
-The official home page and repository for acts_as_xapian are the
-"acts_as_xapian github page}[http://github.com/frabcus/acts_as_xapian/wikis]
+The official home page and repository for acts_as_xapian are the {acts_as_xapian github page}[http://github.com/frabcus/acts_as_xapian/wikis]
 
 For more details about anything, see source code in lib/acts_as_xapian/*.rb
