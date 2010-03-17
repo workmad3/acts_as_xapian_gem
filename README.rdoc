@@ -8,6 +8,9 @@ acts_as_xapian is deployed in production on these websites.
 * WhatDoTheyKnow[http://www.whatdotheyknow.com] 
 * MindBites[http://www.mindbites.com]
 
+== A Quick Note
+
+This gem was created directly from the acts_as_xapian plugin. There were very few changes, the majority of which were to make the gem handle installation better. If you'd like more information about the original plugin go here[http://www.github.com/frabcus/acts_as_xapian/] or if I've left something crucial out, send me a message via github.
 
 == Installation
 
@@ -30,7 +33,7 @@ Instead, there is a ActsAsXapianJob model which stores which models need updatin
 
 Here's how to add indexing to your Rails app:
 
-1. Put acts_as_xapian in your models that need search indexing. e.g.
+Put acts_as_xapian in your models that need search indexing. e.g.
 
   acts_as_xapian :texts => [:name, :short_name],
                            :values => [[ :created_at, 0, "created_at", :date ]],
@@ -54,13 +57,13 @@ Options may include:
 * :eager_load, added as an :include clause when looking up search results in database
 * :if, either an attribute or a function which if returns false means the object isn't indexed
 
-2. To build the index
+To build the index
 the first time, call: 
  rake xapian:rebuild_index
 
 It puts the db in the development/test/production directory in your db directory. See the configuration section below if you want to change this.
 
-3. Then from a cron job or a daemon, or by hand regularly!, call:
+Then from a cron job or a daemon, or by hand regularly!, call:
  'rake xapian:update_index'
 
 
