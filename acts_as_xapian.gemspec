@@ -5,22 +5,22 @@
 
 Gem::Specification.new do |s|
   s.name = %q{acts_as_xapian}
-  s.version = "0.0.1"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mike Nelson"]
   s.date = %q{2010-03-17}
-  s.description = %q{ruby gem for integrating with the xapian fulltext search engine}
+  s.description = %q{A gem for interacting with the Xapian full text search engine. Completely based on the acts_as_xapian plugin.}
   s.email = %q{mdnelson30@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
-     "README.textile"
+     "README.rdoc"
   ]
   s.files = [
     ".document",
      ".gitignore",
      "LICENSE",
-     "README.textile",
+     "README.rdoc",
      "Rakefile",
      "VERSION",
      "acts_as_xapian.gemspec",
@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.6}
-  s.summary = %q{acts_as_xapian gemified}
+  s.summary = %q{A gem for interacting with the Xapian full text search engine}
   s.test_files = [
     "spec/acts_as_xapian_spec.rb",
      "spec/spec_helper.rb"
@@ -57,11 +57,14 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
+      s.add_development_dependency(%q<active_record>, [">= 0"])
     else
       s.add_dependency(%q<rspec>, [">= 1.2.9"])
+      s.add_dependency(%q<active_record>, [">= 0"])
     end
   else
     s.add_dependency(%q<rspec>, [">= 1.2.9"])
+    s.add_dependency(%q<active_record>, [">= 0"])
   end
 end
 
