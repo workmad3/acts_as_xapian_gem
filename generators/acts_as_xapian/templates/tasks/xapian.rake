@@ -29,7 +29,7 @@ namespace :xapian do
     # collapse_by_prefix
     desc 'Run a query, return YAML of results'
     task :query => :retrieve_models do
-        raise "specify query=\"your terms\" as parameter" if (ENV['query'] || ENV['q']).nil?
+        raise "specify q=\"your terms\" as parameter" if (ENV['query'] || ENV['q']).nil?
         s = ActsAsXapian::Search.new(@models, 
             (ENV['query'] || ENV['q']),
             :offset => (ENV['offset'] || 0), :limit => (ENV['limit'] || 10),
